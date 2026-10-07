@@ -46,6 +46,16 @@ body {
     50% { transform: translate(50px,-50px) scale(1.2); }
 }
 
+    .game-top-bar { gap: 4px !important; padding: 6px 8px !important; }
+.game-top-bar .leave-btn, .game-top-bar .chat-game-btn { padding: 5px 7px !important; font-size: 9px !important; gap: 3px !important; }
+.game-top-bar .mini-stats { gap: 4px !important; }
+.game-top-bar .mini-player { padding: 2px 5px !important; gap: 3px !important; max-width: 90px !important; }
+.game-top-bar .mini-avatar { width: 22px !important; height: 22px !important; font-size: 10px !important; }
+.game-top-bar .mini-name { font-size: 8px !important; max-width: 40px !important; }
+.game-top-bar .mini-score { font-size: 10px !important; padding: 1px 4px !important; }
+.game-top-bar .round-counter { font-size: 9px !important; padding: 4px 5px !important; }
+.game-top-bar .turn-timer { font-size: 11px !important; padding: 4px 7px !important; min-width: 30px !important; }
+    
 header {
     background: rgba(10,10,15,.85);
     backdrop-filter: blur(20px);
@@ -171,10 +181,9 @@ header {
 }
 .auth-error.show { display: block; }
 
-/* Quick Actions Bar */
 .quick-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 10px;
     margin-bottom: 14px;
 }
@@ -204,17 +213,6 @@ header {
     color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(155,89,182,.5);
-}
-.quick-btn.history {
-    border-color: var(--gold);
-    color: var(--gold);
-    background: linear-gradient(135deg, rgba(255,215,0,.15), rgba(255,215,0,.05));
-}
-.quick-btn.history:hover {
-    background: var(--grad-gold);
-    color: #000;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255,215,0,.5);
 }
 
 .search-box-wrap { position: relative; margin-bottom: 16px; }
@@ -315,6 +313,14 @@ header {
     border-radius: 10px; font-size: 11px; font-weight: 800;
     cursor: pointer; display: flex; align-items: center;
     gap: 4px; box-shadow: 0 3px 12px rgba(231,76,60,.5);
+}
+
+.chat-game-btn {
+    background: linear-gradient(135deg, var(--blue), #2980b9);
+    color: #fff; border: none; padding: 8px 12px;
+    border-radius: 10px; font-size: 11px; font-weight: 800;
+    cursor: pointer; display: flex; align-items: center;
+    gap: 4px; box-shadow: 0 3px 12px rgba(52,152,219,.5);
 }
 
 .mini-stats {
@@ -579,25 +585,6 @@ header {
 .play-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(255,215,0,.7); }
 .play-btn:active:not(:disabled) { transform: scale(0.98); }
 .play-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
-
-.send-msg-btn {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, var(--blue), #2980b9);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(52,152,219,.4);
-    transition: all .25s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-.send-msg-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(52,152,219,.6); }
 
 .action-dialog {
     position: fixed;
@@ -984,33 +971,6 @@ header {
     to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
 
-.leaderboard-card {
-    background: linear-gradient(135deg, rgba(255,215,0,.12), rgba(255,46,99,.08));
-    border: 1.5px solid var(--gold);
-    border-radius: 16px;
-    padding: 14px;
-    margin-bottom: 14px;
-}
-.leaderboard-title {
-    font-size: 12px; font-weight: 900;
-    color: var(--gold); margin-bottom: 10px;
-    display: flex; align-items: center; gap: 6px;
-}
-.leaderboard-row {
-    display: flex; justify-content: space-between;
-    align-items: center; padding: 6px 0;
-    font-size: 12px;
-    border-bottom: 1px dashed rgba(255,255,255,.08);
-}
-.leaderboard-row:last-child { border-bottom: none; }
-.leaderboard-row .name { font-weight: 800; color: var(--text); }
-.leaderboard-row .wins { 
-    color: var(--gold); font-weight: 900;
-    background: rgba(255,215,0,.15);
-    padding: 2px 10px; border-radius: 8px;
-    font-size: 11px;
-}
-
 .rules-info {
     background: rgba(52,152,219,.08);
     border: 1px solid rgba(52,152,219,.3);
@@ -1022,168 +982,6 @@ header {
     line-height: 1.8;
 }
 .rules-info strong { color: var(--blue); }
-
-/* History items */
-.history-item {
-    background: rgba(255,255,255,.04);
-    border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    transition: all .25s;
-}
-.history-item:hover {
-    background: rgba(255,255,255,.06);
-    border-color: var(--gold);
-}
-.history-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 11px;
-    color: var(--text3);
-    flex-wrap: wrap;
-    gap: 6px;
-}
-.history-date {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.history-result-badge {
-    font-weight: 900;
-    padding: 2px 10px;
-    border-radius: 8px;
-    font-size: 10px;
-}
-.history-result-badge.win {
-    background: rgba(46,204,113,.2);
-    color: var(--green);
-    border: 1px solid rgba(46,204,113,.4);
-}
-.history-result-badge.lose {
-    background: rgba(231,76,60,.15);
-    color: var(--red);
-    border: 1px solid rgba(231,76,60,.35);
-}
-.history-result-badge.draw {
-    background: rgba(255,215,0,.15);
-    color: var(--gold);
-    border: 1px solid rgba(255,215,0,.35);
-}
-.history-result {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-.history-player {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-width: 0;
-}
-.history-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 2px solid var(--border2);
-    background: var(--grad);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 14px;
-    color: #fff;
-    flex-shrink: 0;
-    overflow: hidden;
-}
-.history-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.history-avatar.winner {
-    border-color: var(--gold);
-    box-shadow: 0 0 15px rgba(255,215,0,.6);
-}
-.history-name {
-    font-size: 12px;
-    font-weight: 800;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.history-name.winner {
-    color: var(--gold);
-}
-.history-score {
-    font-size: 20px;
-    font-weight: 900;
-    color: var(--text);
-    min-width: 70px;
-    text-align: center;
-    font-family: 'Courier New', monospace;
-}
-.history-score .winner-score {
-    color: var(--green);
-    text-shadow: 0 0 10px rgba(46,204,113,.6);
-}
-
-/* Random waiting card */
-.random-waiting-card {
-    background: linear-gradient(135deg, rgba(155,89,182,.15), rgba(52,152,219,.1));
-    border: 2px solid var(--purple);
-    border-radius: 20px;
-    padding: 30px 24px;
-    text-align: center;
-    box-shadow: 0 0 40px rgba(155,89,182,.4);
-    animation: pulseCard 2s ease-in-out infinite;
-}
-@keyframes pulseCard {
-    0%, 100% { box-shadow: 0 0 40px rgba(155,89,182,.4); }
-    50% { box-shadow: 0 0 60px rgba(155,89,182,.7); }
-}
-.random-waiting-title {
-    font-size: 18px;
-    font-weight: 900;
-    color: var(--purple);
-    margin-bottom: 8px;
-}
-.random-waiting-subtitle {
-    font-size: 12px;
-    color: var(--text2);
-    line-height: 1.7;
-    margin-bottom: 16px;
-}
-.random-players-count {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,215,0,.15);
-    border: 1.5px solid var(--gold);
-    border-radius: 12px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 900;
-    color: var(--gold);
-    margin-bottom: 16px;
-}
-.cancel-random-btn {
-    padding: 12px 24px;
-    background: linear-gradient(135deg, var(--red), #c0392b);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 13px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(231,76,60,.5);
-    transition: all .25s;
-}
-.cancel-random-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(231,76,60,.7);
-}
 
 @media (max-width: 380px) {
     .hand-emoji { font-size: 52px; }
@@ -1227,15 +1025,9 @@ header {
         </div>
     </div>
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="openChatModal()" title="رسالة">
-            <i class="bi bi-chat-dots-fill"></i>
-        </button>
         <button class="nav-btn" onclick="openChallengesModal()" title="التحديات">
             <i class="bi bi-lightning-charge-fill"></i>
             <span id="challengeCount" class="notification-badge" style="display:none">0</span>
-        </button>
-        <button class="nav-btn" onclick="logout()" title="خروج">
-            <i class="bi bi-box-arrow-right"></i>
         </button>
     </div>
 </header>
@@ -1247,20 +1039,6 @@ header {
                 <i class="bi bi-shuffle"></i>
                 🎲 لعب عشوائي
             </button>
-            <button class="quick-btn history" onclick="openHistoryModal()">
-                <i class="bi bi-clock-history"></i>
-                📊 سجل المباريات
-            </button>
-        </div>
-
-        <div class="leaderboard-card">
-            <div class="leaderboard-title">
-                <i class="bi bi-trophy-fill"></i>
-                🏆 أفضل 5 لاعبين
-            </div>
-            <div id="leaderboardList">
-                <div style="font-size:11px;color:var(--text3);text-align:center;padding:8px;">جاري التحميل...</div>
-            </div>
         </div>
 
         <div class="search-box-wrap">
@@ -1311,6 +1089,9 @@ header {
         <button class="leave-btn" onclick="leaveGame()">
             <i class="bi bi-box-arrow-right"></i> انسحاب
         </button>
+        <button class="chat-game-btn" onclick="openChatModal()">
+            <i class="bi bi-chat-dots-fill"></i> رسالة
+        </button>
         
         <div class="mini-stats">
             <div class="mini-player" id="miniP1">
@@ -1353,10 +1134,6 @@ header {
             <i class="bi bi-play-fill"></i>
             <span id="playBtnText">ابدأ اللعب</span>
         </button>
-        <button class="send-msg-btn" onclick="openChatModal()">
-            <i class="bi bi-chat-dots-fill"></i>
-            إرسال رسالة للجميع
-        </button>
     </div>
 </div>
 
@@ -1394,33 +1171,13 @@ header {
             </button>
         </div>
         <p style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:16px;line-height:1.7;">
-            💬 ستظهر رسالتك مع اسمك وصورتك وسط الشاشة للجميع لمدة <strong style="color:var(--gold);">5 ثواني</strong> مع صوت جميل
+            💬 ستظهر رسالتك مع اسمك وصورتك وسط الشاشة للخصم في غرفة اللعب لمدة <strong style="color:var(--gold);">5 ثواني</strong> مع صوت جميل
         </p>
         <div class="chat-input-box">
             <input type="text" id="chatInput" placeholder="اكتب رسالتك (حتى 60 حرف)..." maxlength="60" autocomplete="off">
             <button onclick="sendChatMessage()">
                 <i class="bi bi-send-fill"></i> إرسال
             </button>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="historyModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div class="modal-title">
-                <i class="bi bi-clock-history"></i>
-                📊 سجل المباريات الكامل
-            </div>
-            <button class="modal-close" onclick="closeModal('historyModal')">
-                <i class="bi bi-x-lg"></i>
-            </button>
-        </div>
-        <div id="historyList">
-            <div class="empty-state">
-                <i class="bi bi-hourglass-split"></i>
-                جاري التحميل...
-            </div>
         </div>
     </div>
 </div>
@@ -1437,18 +1194,19 @@ header {
             </button>
         </div>
         <div id="randomGameContent">
-            <div class="random-waiting-card">
+            <div style="background: linear-gradient(135deg, rgba(155,89,182,.15), rgba(52,152,219,.1)); border: 2px solid var(--purple); border-radius: 20px; padding: 30px 24px; text-align: center; box-shadow: 0 0 40px rgba(155,89,182,.4);">
                 <div class="waiting-spinner" style="margin: 0 auto 20px;"></div>
-                <div class="random-waiting-title">⏳ جاري البحث عن خصم...</div>
-                <div class="random-waiting-subtitle">
+                <div style="font-size: 18px; font-weight: 900; color: var(--purple); margin-bottom: 8px;">⏳ جاري البحث عن خصم...</div>
+                <div style="font-size: 12px; color: var(--text2); line-height: 1.7; margin-bottom: 16px;">
                     سيتم تصنيفك تلقائياً مع لاعب آخر<br>
                     عند وصول لاعب ثاني، تبدأ اللعبة فوراً 🎮
                 </div>
-                <div class="random-players-count">
+                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,215,0,.15); border: 1.5px solid var(--gold); border-radius: 12px; padding: 8px 16px; font-size: 14px; font-weight: 900; color: var(--gold); margin-bottom: 16px;">
                     <i class="bi bi-people-fill"></i>
                     <span id="randomPlayersCount">1 / 2</span>
                 </div>
-                <button class="cancel-random-btn" onclick="cancelRandomGame()">
+                <br>
+                <button onclick="cancelRandomGame()" style="padding: 12px 24px; background: linear-gradient(135deg, var(--red), #c0392b); color: #fff; border: none; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; box-shadow: 0 4px 15px rgba(231,76,60,.5); margin-top: 8px;">
                     <i class="bi bi-x-circle"></i>
                     إلغاء البحث
                 </button>
@@ -1573,6 +1331,8 @@ let heartbeatInterval = null;
 let currentGame = null;
 let myRandomQueueId = null;
 let isSearchingRandom = false;
+let randomMatchInProgress = false;
+let randomGameStarted = false;
 
 let gameState = {
     myHands: [],
@@ -1838,11 +1598,20 @@ window.openChallengesModal = function() { openModal('challengesModal'); };
 
 window.openChatModal = function() {
     if (!currentUser) return;
+    if (!currentGameId) {
+        showToast('⚠️', 'الرسائل متاحة فقط داخل غرفة اللعب');
+        return;
+    }
     openModal('chatModal');
     setTimeout(() => $('chatInput')?.focus(), 200);
 };
 
 window.sendChatMessage = async function() {
+    if (!currentGameId) {
+        showToast('⚠️', 'لا يمكنك إرسال رسالة خارج غرفة اللعب');
+        return;
+    }
+    
     const input = $('chatInput');
     const text = input.value.trim();
     if (!text) return;
@@ -1862,6 +1631,7 @@ window.sendChatMessage = async function() {
             senderId: currentUser.uid,
             senderName: myName,
             senderAvatar: myAvatar,
+            gameId: currentGameId,
             createdAt: serverTimestamp(),
             timestamp: Date.now()
         });
@@ -1869,6 +1639,15 @@ window.sendChatMessage = async function() {
         input.value = '';
         closeModal('chatModal');
         showToast('✅', 'تم إرسال الرسالة');
+        
+        playMessageSound();
+        showInGameMessage(
+            `💬 ${text}`, 
+            'chat', 
+            5000, 
+            myAvatar, 
+            myName
+        );
     } catch(e) { 
         console.error(e);
         showToast('❌', 'فشل إرسال الرسالة'); 
@@ -1877,311 +1656,260 @@ window.sendChatMessage = async function() {
 
 function listenForMessages() {
     if (unsubscribeMessages) unsubscribeMessages();
+    
+    if (!currentGameId) {
+        lastChatTimestamp = Date.now();
+        return;
+    }
+    
+    if (!lastChatTimestamp) lastChatTimestamp = Date.now() - 10000;
+    
     const q = query(
         collection(db, 'm7basMessages'),
         orderBy('timestamp', 'desc'),
-        limit(1)
+        limit(30)
     );
     
     unsubscribeMessages = onSnapshot(q, (snap) => {
+        const myGameId = currentGameId;
         snap.docChanges().forEach(change => {
             if (change.type === 'added') {
                 const msg = change.doc.data();
+                
+                if (msg.gameId !== myGameId) return;
+                
                 const ts = msg.timestamp || 0;
-                if (ts > lastChatTimestamp) {
-                    lastChatTimestamp = ts;
-                    playMessageSound();
-                    showInGameMessage(
-                        `💬 ${msg.text}`, 
-                        'chat', 
-                        5000, 
-                        msg.senderAvatar || null, 
-                        msg.senderName
-                    );
+                
+                if (msg.senderId === currentUser.uid) {
+                    if (ts > lastChatTimestamp) lastChatTimestamp = ts;
+                    return;
                 }
+                
+                if (ts <= lastChatTimestamp) return;
+                
+                lastChatTimestamp = ts;
+                playMessageSound();
+                showInGameMessage(
+                    `💬 ${msg.text}`, 
+                    'chat', 
+                    5000, 
+                    msg.senderAvatar || null, 
+                    msg.senderName
+                );
             }
         });
+    }, (error) => {
+        console.error('خطأ في الاستماع للرسائل:', error);
     });
 }
 
-// ==================== HISTORY ====================
-window.openHistoryModal = async function() {
-    openModal('historyModal');
-    await loadHistory();
-};
-
-async function loadHistory() {
-    const list = $('historyList');
-    list.innerHTML = `<div class="empty-state"><i class="bi bi-hourglass-split"></i>جاري التحميل...</div>`;
-    
-    try {
-        const snap = await getDocs(collection(db, 'm7basHistory'));
-        const games = [];
-        snap.forEach(d => {
-            games.push({ id: d.id, ...d.data() });
-        });
-        
-        if (games.length === 0) {
-            list.innerHTML = `
-                <div class="empty-state">
-                    <i class="bi bi-inbox"></i>
-                    لا توجد مباريات مسجلة بعد
-                </div>
-            `;
-            return;
-        }
-        
-        games.sort((a, b) => (b.finishedAt || 0) - (a.finishedAt || 0));
-        const top = games.slice(0, 50);
-        
-        let html = `<div style="font-size:12px;color:var(--text3);text-align:center;margin-bottom:14px;">
-            📊 إجمالي المباريات: <strong style="color:var(--gold);">${games.length}</strong>
-        </div>`;
-        
-        top.forEach(g => {
-            const date = g.finishedAt ? new Date(g.finishedAt).toLocaleString('ar-SA', {
-                year: 'numeric', month: 'short', day: 'numeric',
-                hour: '2-digit', minute: '2-digit'
-            }) : 'غير معروف';
-            
-            const p1 = g.p1 || {};
-            const p2 = g.p2 || {};
-            const p1Score = p1.score || 0;
-            const p2Score = p2.score || 0;
-            const p1Won = p1Score > p2Score;
-            const p2Won = p2Score > p1Score;
-            const isDraw = p1Score === p2Score;
-            
-            const p1Avatar = p1.photo
-                ? `<img src="${p1.photo}" alt="">`
-                : `<span>${(p1.name || '?').charAt(0)}</span>`;
-            const p2Avatar = p2.photo
-                ? `<img src="${p2.photo}" alt="">`
-                : `<span>${(p2.name || '?').charAt(0)}</span>`;
-            
-            let badgeClass = 'draw';
-            let badgeText = '🤝 تعادل';
-            if (p1Won) { badgeClass = 'win'; badgeText = `🏆 ${p1.name}`; }
-            else if (p2Won) { badgeClass = 'win'; badgeText = `🏆 ${p2.name}`; }
-            
-            const isRandom = g.isRandom ? '🎲' : '⚔️';
-            
-            html += `
-                <div class="history-item">
-                    <div class="history-header">
-                        <div class="history-date">
-                            <i class="bi bi-calendar3"></i>
-                            ${date} ${isRandom}
-                        </div>
-                        <div class="history-result-badge ${badgeClass}">${badgeText}</div>
-                    </div>
-                    <div class="history-result">
-                        <div class="history-player">
-                            <div class="history-avatar ${p1Won ? 'winner' : ''}">${p1Avatar}</div>
-                            <div class="history-name ${p1Won ? 'winner' : ''}">${p1.name || 'لاعب 1'}</div>
-                        </div>
-                        <div class="history-score">
-                            <span class="${p1Won ? 'winner-score' : ''}">${p1Score}</span>
-                            -
-                            <span class="${p2Won ? 'winner-score' : ''}">${p2Score}</span>
-                        </div>
-                        <div class="history-player" style="justify-content: flex-end;">
-                            <div class="history-name ${p2Won ? 'winner' : ''}">${p2.name || 'لاعب 2'}</div>
-                            <div class="history-avatar ${p2Won ? 'winner' : ''}">${p2Avatar}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        list.innerHTML = html;
-    } catch(e) {
-        console.error(e);
-        list.innerHTML = `
-            <div class="empty-state">
-                <i class="bi bi-exclamation-triangle"></i>
-                فشل تحميل السجل
-            </div>
-        `;
+function stopListeningMessages() {
+    if (unsubscribeMessages) {
+        unsubscribeMessages();
+        unsubscribeMessages = null;
     }
+    lastChatTimestamp = Date.now();
 }
 
-// ==================== RANDOM GAME ====================
 window.openRandomGame = async function() {
     if (!currentUser) return;
+
     if (isSearchingRandom) {
         openModal('randomGameModal');
         return;
     }
-    
+
     isSearchingRandom = true;
+    randomMatchInProgress = false;
+    randomGameStarted = false;
     openModal('randomGameModal');
     $('randomPlayersCount').textContent = '1 / 2';
-    
+
     try {
         const myDoc = await getDoc(doc(db, 'users', currentUser.uid));
         const myData = myDoc.exists() ? myDoc.data() : {};
         const myName = myData.name || currentUser.displayName || currentUser.email?.split('@')[0] || 'مستخدم';
         const myAvatar = myData.avatar || currentUser.photoURL || '';
-        
-        // إضافة نفسي لقائمة الانتظار
+
         const queueRef = await addDoc(collection(db, 'm7basRandomQueue'), {
             uid: currentUser.uid,
             name: myName,
             photo: myAvatar,
             joinedAt: serverTimestamp(),
             timestamp: Date.now(),
-            status: 'waiting'
+            status: 'waiting',
+            gameId: null
         });
         myRandomQueueId = queueRef.id;
-        
-        // البحث عن لاعب آخر في القائمة
-        tryMatchRandomOpponent();
-        
-        // مراقبة القائمة
+
         if (unsubscribeRandomQueue) unsubscribeRandomQueue();
         unsubscribeRandomQueue = onSnapshot(collection(db, 'm7basRandomQueue'), (snap) => {
             const now = Date.now();
+            let waitingCount = 0;
+
             snap.forEach(d => {
-                if (d.id !== myRandomQueueId) {
-                    const data = d.data();
-                    const ts = data.timestamp || 0;
-                    // إذا مضى أكثر من 30 ثانية، احذفه
-                    if (now - ts > 30000) {
-                        deleteDoc(doc(db, 'm7basRandomQueue', d.id)).catch(() => {});
+                const data = d.data();
+
+                if (data.status === 'waiting' && (data.timestamp || 0) > 0) {
+                    if (now - (data.timestamp || 0) <= 30000) {
+                        waitingCount++;
                     }
                 }
+
+                if (d.id === myRandomQueueId && data.status === 'matched' && data.gameId) {
+                    startRandomMatchedGame(data.gameId);
+                }
+
+                if (d.id !== myRandomQueueId &&
+                    data.status === 'waiting' &&
+                    now - (data.timestamp || 0) > 30000) {
+                    deleteDoc(doc(db, 'm7basRandomQueue', d.id)).catch(() => {});
+                }
             });
-            tryMatchRandomOpponent();
+
+            $('randomPlayersCount').textContent =
+                waitingCount >= 2 ? '2 / 2' : '1 / 2';
+
+            tryMatchRandomOpponent(snap);
         });
+
+        await tryMatchRandomOpponent();
+
     } catch(e) {
         console.error(e);
-        showToast('❌', 'فشل الانضمام');
         isSearchingRandom = false;
         myRandomQueueId = null;
+        showToast('❌', 'فشل الانضمام للبحث');
     }
 };
 
-async function tryMatchRandomOpponent() {
-    if (!myRandomQueueId || !isSearchingRandom) return;
-    
+async function tryMatchRandomOpponent(queueSnap = null) {
+    if (!myRandomQueueId || !isSearchingRandom || randomMatchInProgress || randomGameStarted) return;
+
+    randomMatchInProgress = true;
+
     try {
-        const snap = await getDocs(collection(db, 'm7basRandomQueue'));
+        const snap = queueSnap || await getDocs(collection(db, 'm7basRandomQueue'));
         const now = Date.now();
         let opponentDoc = null;
-        
+
         for (const d of snap.docs) {
             if (d.id === myRandomQueueId) continue;
+
             const data = d.data();
+            if (data.status !== 'waiting') continue;
+
             const ts = data.timestamp || 0;
-            
-            // تجاهل القديم
             if (now - ts > 30000) {
                 await deleteDoc(doc(db, 'm7basRandomQueue', d.id)).catch(() => {});
                 continue;
             }
-            
-            // هذا الخصم!
+
             if (data.uid !== currentUser.uid) {
                 opponentDoc = d;
                 break;
             }
         }
-        
+
         if (!opponentDoc) return;
-        
-        // وجدنا خصم!
-        $('randomPlayersCount').textContent = '2 / 2';
-        
+
         const opponentData = opponentDoc.data();
-        const myDoc = await getDoc(doc(db, 'users', currentUser.uid));
-        const myData = myDoc.exists() ? myDoc.data() : {};
-        const myName = myData.name || currentUser.displayName || currentUser.email?.split('@')[0] || 'مستخدم';
-        const myPhoto = myData.avatar || currentUser.photoURL || '';
-        
-        // إنشاء المباراة
-        const gameId = await createRandomGame(
+        const amMatcher = currentUser.uid < opponentData.uid;
+
+        $('randomPlayersCount').textContent = '2 / 2';
+
+        if (!amMatcher) return;
+
+        const [myQueueSnap, oppQueueSnap] = await Promise.all([
+            getDoc(doc(db, 'm7basRandomQueue', myRandomQueueId)),
+            getDoc(doc(db, 'm7basRandomQueue', opponentDoc.id))
+        ]);
+
+        if (!myQueueSnap.exists() || !oppQueueSnap.exists()) return;
+
+        const myQueue = myQueueSnap.data();
+        const oppQueue = oppQueueSnap.data();
+
+        if (myQueue.status !== 'waiting' || oppQueue.status !== 'waiting') return;
+
+        const gameId = await createGameForBoth(
             opponentData.uid,
             opponentData.name,
             opponentData.photo,
-            myName,
-            myPhoto
+            true
         );
-        
-        // حذف من قائمة الانتظار
-        await deleteDoc(doc(db, 'm7basRandomQueue', myRandomQueueId)).catch(() => {});
-        await deleteDoc(doc(db, 'm7basRandomQueue', opponentDoc.id)).catch(() => {});
-        
-        // وقف المراقبة
-        if (unsubscribeRandomQueue) { unsubscribeRandomQueue(); unsubscribeRandomQueue = null; }
-        isSearchingRandom = false;
-        myRandomQueueId = null;
-        
-        // إغلاق النافذة وبدء اللعب
-        closeModal('randomGameModal');
-        currentGameId = gameId;
-        document.querySelector('.container').style.display = 'none';
-        $('gameArea').classList.add('active');
-        $('waitingOverlay').classList.remove('show');
-        listenToGame(gameId);
-        
+
+        await updateDoc(doc(db, 'm7basRandomQueue', myRandomQueueId), {
+            status: 'matched',
+            gameId: gameId,
+            matchedAt: serverTimestamp()
+        });
+
+        await updateDoc(doc(db, 'm7basRandomQueue', opponentDoc.id), {
+            status: 'matched',
+            gameId: gameId,
+            matchedAt: serverTimestamp()
+        });
+
+        startRandomMatchedGame(gameId);
+
     } catch(e) {
         console.error(e);
+        showToast('❌', 'تعذر مطابقة الخصم');
+    } finally {
+        randomMatchInProgress = false;
     }
 }
 
-async function createRandomGame(oppUid, oppName, oppPhoto, myName, myPhoto) {
-    const p1Wins = await getWins(currentUser.uid);
-    const p2Wins = await getWins(oppUid);
-    
-    let startingRole = 'p1';
-    if (p2Wins > p1Wins) startingRole = 'p2';
-    else if (p1Wins === p2Wins) {
-        startingRole = Math.random() < 0.5 ? 'p1' : 'p2';
+function startRandomMatchedGame(gameId) {
+    if (!gameId || randomGameStarted) return;
+
+    randomGameStarted = true;
+    isSearchingRandom = false;
+
+    if (unsubscribeRandomQueue) {
+        unsubscribeRandomQueue();
+        unsubscribeRandomQueue = null;
     }
+
+    if (myRandomQueueId) {
+        deleteDoc(doc(db, 'm7basRandomQueue', myRandomQueueId)).catch(() => {});
+        myRandomQueueId = null;
+    }
+
+    closeModal('randomGameModal');
+    currentGameId = gameId;
+    document.querySelector('.container').style.display = 'none';
+    $('gameArea').classList.add('active');
+    $('waitingOverlay').classList.remove('show');
     
-    const gameData = {
-        status: 'active',
-        isRandom: true,
-        createdAt: serverTimestamp(),
-        startedAt: Date.now(),
-        currentRound: 1,
-        phase: 'hiding',
-        hiderRole: startingRole,
-        hideEndTime: Date.now() + (HIDE_TIME * 1000),
-        searchEndTime: null,
-        hiderHands: [-1, -1, -1, -1],
-        revealedHands: [],
-        searcherGuess: -1,
-        searcherAction: null,
-        roundWinner: null,
-        roundReason: null,
-        p1: { 
-            uid: currentUser.uid, name: myName, photo: myPhoto, 
-            score: 0, wins: p1Wins, roundsWon: 0
-        },
-        p2: { 
-            uid: oppUid, name: oppName, photo: oppPhoto, 
-            score: 0, wins: p2Wins, roundsWon: 0
-        }
-    };
-    
-    const gameRef = await addDoc(collection(db, 'm7basGames'), gameData);
-    return gameRef.id;
+    lastChatTimestamp = Date.now();
+    listenForMessages();
+
+    listenToGame(gameId);
 }
 
 window.cancelRandomGame = async function() {
     isSearchingRandom = false;
-    if (unsubscribeRandomQueue) { unsubscribeRandomQueue(); unsubscribeRandomQueue = null; }
+    randomMatchInProgress = false;
+    randomGameStarted = false;
+
+    if (unsubscribeRandomQueue) {
+        unsubscribeRandomQueue();
+        unsubscribeRandomQueue = null;
+    }
+
     if (myRandomQueueId) {
-        try { await deleteDoc(doc(db, 'm7basRandomQueue', myRandomQueueId)); } catch(e) {}
+        try {
+            await deleteDoc(doc(db, 'm7basRandomQueue', myRandomQueueId));
+        } catch(e) {}
         myRandomQueueId = null;
     }
+
     closeModal('randomGameModal');
     showToast('ℹ️', 'تم إلغاء البحث');
 };
 
-// ==================== AUTH ====================
 window.handleLogin = async function() {
     const email = $('email').value.trim();
     const pass = $('pass').value;
@@ -2240,8 +1968,6 @@ onAuthStateChanged(auth, async (user) => {
         loadMembers();
         listenForActiveUsers();
         listenForIncomingChallenges();
-        listenForMessages();
-        loadLeaderboard();
     } else {
         currentUser = null;
         $('authScreen').classList.add('active');
@@ -2386,33 +2112,6 @@ function renderMembers() {
 
 window.filterMembers = function() { renderMembers(); };
 
-async function loadLeaderboard() {
-    try {
-        const snap = await getDocs(collection(db, 'm7basLeaderboard'));
-        const list = [];
-        snap.forEach(d => {
-            const data = d.data();
-            list.push({ uid: d.id, ...data });
-        });
-        list.sort((a, b) => (b.wins || 0) - (a.wins || 0));
-        const top = list.slice(0, 5);
-        const el = $('leaderboardList');
-        if (top.length === 0) {
-            el.innerHTML = '<div style="font-size:11px;color:var(--text3);text-align:center;padding:8px;">لا توجد سجلات بعد</div>';
-            return;
-        }
-        el.innerHTML = top.map((p, i) => {
-            const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}.`;
-            return `<div class="leaderboard-row">
-                <span class="name">${medal} ${p.name || 'لاعب'}</span>
-                <span class="wins">${p.wins || 0} 🏆</span>
-            </div>`;
-        }).join('');
-    } catch(e) {
-        $('leaderboardList').innerHTML = '<div style="font-size:11px;color:var(--text3);text-align:center;padding:8px;">خطأ في التحميل</div>';
-    }
-}
-
 window.openChallengeSetup = function(uid, name) {
     const targetMember = allMembers.find(m => m.uid === uid);
     if (!targetMember) return;
@@ -2493,11 +2192,15 @@ window.acceptChallenge = async function(challengeId) {
         document.querySelector('.container').style.display = 'none';
         $('gameArea').classList.add('active');
         $('waitingOverlay').classList.remove('show');
+        
+        lastChatTimestamp = Date.now();
+        listenForMessages();
+        
         listenToGame(gameId);
     } catch (e) { showToast('❌', 'فشل القبول'); }
 };
 
-async function createGameForBoth(opponentId, opponentName, opponentPhoto) {
+async function createGameForBoth(opponentId, opponentName, opponentPhoto, isRandom = false) {
     const myDoc = await getDoc(doc(db, 'users', currentUser.uid));
     const myData = myDoc.exists() ? myDoc.data() : {};
     const myName = myData.name || currentUser.displayName || currentUser.email?.split('@')[0] || 'مستخدم';
@@ -2514,7 +2217,7 @@ async function createGameForBoth(opponentId, opponentName, opponentPhoto) {
     
     const gameData = {
         status: 'active',
-        isRandom: false,
+        isRandom: isRandom,
         createdAt: serverTimestamp(),
         startedAt: Date.now(),
         currentRound: 1,
@@ -2554,6 +2257,10 @@ async function startGameFromChallenge(gameId) {
     document.querySelector('.container').style.display = 'none';
     $('gameArea').classList.add('active');
     $('waitingOverlay').classList.remove('show');
+    
+    lastChatTimestamp = Date.now();
+    listenForMessages();
+    
     listenToGame(gameId);
 }
 
@@ -3137,7 +2844,6 @@ async function finishGame() {
             winnerName: winnerRole ? game[winnerRole].name : null
         });
         
-        // حفظ في السجل التاريخي
         await addDoc(collection(db, 'm7basHistory'), {
             p1: { uid: game.p1.uid, name: game.p1.name, photo: game.p1.photo || '', score: p1Score },
             p2: { uid: game.p2.uid, name: game.p2.name, photo: game.p2.photo || '', score: p2Score },
@@ -3245,7 +2951,6 @@ function showGameResult(game) {
     setTimeout(async () => {
         if (currentGameId) { try { await deleteDoc(doc(db, 'm7basGames', currentGameId)); } catch(e) {} }
         if (currentChallengeId) { try { await deleteDoc(doc(db, 'm7basChallenges', currentChallengeId)); } catch(e) {} }
-        loadLeaderboard();
     }, 3000);
 }
 
@@ -3259,11 +2964,14 @@ window.backToLobby = function() {
     waitingForOpponent = false;
     currentChallengeId = null;
     currentGame = null;
+    isSearchingRandom = false;
+    randomMatchInProgress = false;
+    randomGameStarted = false;
+    myRandomQueueId = null;
     gameState.selectedHand = -1;
     gameState.ringHandIndex = -1;
     gameState.myHands = [0, 0, 0, 0];
     document.querySelectorAll('.screen-message').forEach(m => m.remove());
-    loadLeaderboard();
 };
 
 window.leaveGame = async function() {
@@ -3288,7 +2996,6 @@ window.leaveGame = async function() {
                 winReason: 'انسحاب الخصم'
             });
             
-            // حفظ في السجل
             await addDoc(collection(db, 'm7basHistory'), {
                 p1: { uid: game.p1.uid, name: game.p1.name, photo: game.p1.photo || '', score: game.p1.score || 0 },
                 p2: { uid: game.p2.uid, name: game.p2.name, photo: game.p2.photo || '', score: game.p2.score || 0 },
@@ -3311,6 +3018,9 @@ function cleanupGame() {
     if (unsubscribeGame) { unsubscribeGame(); unsubscribeGame = null; }
     if (unsubscribeMyChallenge) { unsubscribeMyChallenge(); unsubscribeMyChallenge = null; }
     if (window._waitTimer) { clearTimeout(window._waitTimer); window._waitTimer = null; }
+    
+    stopListeningMessages();
+    
     currentGameId = null;
     lastProcessedPhase = null;
     lastProcessedRound = 0;
@@ -3395,6 +3105,7 @@ document.addEventListener('selectstart', (e) => {
 
 window.addEventListener('beforeunload', () => {
     cleanupGame();
+    if (unsubscribeRandomQueue) unsubscribeRandomQueue();
     if (heartbeatInterval) clearInterval(heartbeatInterval);
     if (myRandomQueueId) {
         deleteDoc(doc(db, 'm7basRandomQueue', myRandomQueueId)).catch(() => {});
