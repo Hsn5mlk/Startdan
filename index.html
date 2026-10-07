@@ -26,6 +26,12 @@
     --grad-gold: linear-gradient(135deg,#ffd700,#f39c12);
     --grad-royal: linear-gradient(135deg,#ffd700,#ff2e63,#ff6b35);
     --shadow-gold: 0 0 25px rgba(255,215,0,.5);
+    
+    /* الصور الافتراضية - قابلة للتعديل من لوحة الإدارة */
+    --img-hand-closed: url('https://iili.io/nEEPMcF.png');
+    --img-hand-open: url('https://iili.io/nEEP6Nf.png');
+    --img-hand-ring: url('https://iili.io/nEEsXQR.png');
+    --img-game-bg: url('https://iili.io/nEEsZve.gif');
 }
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Tajawal','Segoe UI',sans-serif; }
 body { 
@@ -46,7 +52,7 @@ body {
     50% { transform: translate(50px,-50px) scale(1.2); }
 }
 
-    .game-top-bar { gap: 4px !important; padding: 6px 8px !important; }
+.game-top-bar { gap: 4px !important; padding: 6px 8px !important; }
 .game-top-bar .leave-btn, .game-top-bar .chat-game-btn { padding: 5px 7px !important; font-size: 9px !important; gap: 3px !important; }
 .game-top-bar .mini-stats { gap: 4px !important; }
 .game-top-bar .mini-player { padding: 2px 5px !important; gap: 3px !important; max-width: 90px !important; }
@@ -113,6 +119,14 @@ header {
     position: relative;
 }
 .nav-btn:hover { background: var(--grad-gold); color: #000; transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+.admin-btn {
+    background: linear-gradient(135deg, rgba(255,46,99,.2), rgba(155,89,182,.2));
+    border-color: var(--pink);
+    color: var(--pink);
+    display: none;
+}
+.admin-btn:hover { background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; }
+.admin-btn.show { display: flex; }
 .notification-badge {
     background: var(--red); color: white; border-radius: 50%;
     padding: 1px 5px; font-size: 9px;
@@ -381,7 +395,20 @@ header {
     align-items: center; justify-content: center;
     padding: 16px; position: relative; overflow-y: auto;
     min-height: 0;
+    background-image: var(--img-game-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
+.hands-area::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,15,.55);
+    pointer-events: none;
+    z-index: 0;
+}
+.hands-area > * { position: relative; z-index: 1; }
 
 .hands-title {
     font-size: 16px; font-weight: 900;
@@ -391,12 +418,14 @@ header {
     background-clip: text;
     margin-bottom: 8px; text-align: center;
     letter-spacing: 1px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.9));
 }
 
 .hands-subtitle {
-    font-size: 12px; color: var(--text2);
+    font-size: 12px; color: #fff;
     margin-bottom: 20px; text-align: center;
     padding: 0 20px; line-height: 1.6;
+    text-shadow: 0 2px 6px rgba(0,0,0,.9);
 }
 
 .hands-grid {
@@ -409,7 +438,7 @@ header {
 }
 
 .hand-box {
-    background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
     border: 2px solid var(--border2);
     border-radius: 24px;
     aspect-ratio: 1;
@@ -424,7 +453,8 @@ header {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    padding: 12px;
+    padding: 8px;
+    backdrop-filter: blur(4px);
 }
 
 .hand-box::before {
@@ -447,8 +477,8 @@ header {
 
 .hand-box.selected {
     border-color: var(--gold);
-    background: linear-gradient(135deg, rgba(255,215,0,.2), rgba(255,107,53,.15));
-    box-shadow: 0 0 30px rgba(255,215,0,.5);
+    background: linear-gradient(135deg, rgba(255,215,0,.25), rgba(255,107,53,.15));
+    box-shadow: 0 0 30px rgba(255,215,0,.6);
 }
 
 .hand-box.revealed {
@@ -458,12 +488,12 @@ header {
     opacity: 0.85;
     cursor: default;
 }
-.hand-box.revealed .hand-emoji { opacity: 0.7; }
+.hand-box.revealed .hand-img { opacity: 0.7; }
 .hand-box.revealed .hand-label { color: var(--gold); }
 
 .hand-box.disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.55;
 }
 
 .hand-box.correct {
@@ -491,30 +521,35 @@ header {
     80% { transform: translateX(8px); }
 }
 
-.hand-emoji {
-    font-size: 64px;
-    line-height: 1;
-    margin-bottom: 8px;
+.hand-img {
+    width: 78%;
+    height: 78%;
+    object-fit: contain;
+    margin-bottom: 6px;
     transition: all .3s;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,.3));
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.6));
     pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
-.hand-box.selected .hand-emoji { transform: scale(1.15); filter: drop-shadow(0 0 20px rgba(255,215,0,.8)); }
+.hand-box.selected .hand-img { transform: scale(1.08); filter: drop-shadow(0 0 20px rgba(255,215,0,.9)); }
 
 .hand-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 800;
-    color: var(--text2);
+    color: #fff;
     pointer-events: none;
+    text-shadow: 0 2px 4px rgba(0,0,0,.9);
 }
 .hand-box.selected .hand-label { color: var(--gold); }
 
 .hand-ring-badge {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 20px;
+    top: 6px;
+    right: 6px;
+    font-size: 22px;
     animation: ringGlow 1.5s ease-in-out infinite;
+    z-index: 3;
 }
 @keyframes ringGlow {
     0%,100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255,215,0,.8)); }
@@ -525,7 +560,7 @@ header {
     position: absolute;
     top: 8px;
     left: 8px;
-    background: rgba(255,215,0,.2);
+    background: rgba(255,215,0,.25);
     color: var(--gold);
     border: 1.5px solid var(--gold);
     width: 26px;
@@ -536,6 +571,7 @@ header {
     justify-content: center;
     font-size: 12px;
     font-weight: 900;
+    z-index: 3;
 }
 
 .game-bottom-bar {
@@ -983,11 +1019,107 @@ header {
 }
 .rules-info strong { color: var(--blue); }
 
+/* ====== لوحة إدارة اللعب ====== */
+.admin-section {
+    margin-bottom: 18px;
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,46,99,.08), rgba(155,89,182,.08));
+    border: 1.5px solid rgba(255,46,99,.35);
+}
+.admin-section-title {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--pink);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.admin-section-title .ico { font-size: 20px; }
+.admin-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1.5px solid var(--border);
+    margin-bottom: 10px;
+}
+.admin-preview {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(0,0,0,.4);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid var(--gold);
+    flex-shrink: 0;
+}
+.admin-field-body { flex: 1; min-width: 0; }
+.admin-field-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+.admin-input {
+    width: 100%;
+    padding: 9px 12px;
+    background: rgba(0,0,0,.35);
+    border: 1.5px solid var(--border2);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 11px;
+    outline: none;
+    direction: ltr;
+    text-align: left;
+}
+.admin-input:focus { border-color: var(--pink); }
+.admin-btn-sm {
+    padding: 7px 12px;
+    border-radius: 9px;
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all .2s;
+    white-space: nowrap;
+}
+.admin-btn-save {
+    background: linear-gradient(135deg, var(--green), #27ae60);
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(46,204,113,.4);
+}
+.admin-btn-del {
+    background: linear-gradient(135deg, var(--red), #c0392b);
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(231,76,60,.4);
+}
+.admin-btn-sm:hover { transform: translateY(-2px); }
+.admin-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+.admin-hint {
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 6px;
+    line-height: 1.6;
+}
+
 @media (max-width: 380px) {
-    .hand-emoji { font-size: 52px; }
-    .hand-label { font-size: 11px; }
+    .hand-img { width: 75%; height: 75%; }
+    .hand-label { font-size: 10px; }
     .quick-btn { font-size: 12px; padding: 12px 8px; }
     .quick-btn i { font-size: 16px; }
+    .hand-number-badge { width: 22px; height: 22px; font-size: 10px; }
 }
 </style>
 </head>
@@ -1025,6 +1157,10 @@ header {
         </div>
     </div>
     <div class="nav-buttons">
+        <!-- أيقونة إدارة اللعب - تظهر للملك والملكة فقط -->
+        <button class="nav-btn admin-btn" id="adminGameBtn" onclick="openGameAdmin()" title="إدارة اللعب">
+            <i class="bi bi-sliders2"></i>
+        </button>
         <button class="nav-btn" onclick="openChallengesModal()" title="التحديات">
             <i class="bi bi-lightning-charge-fill"></i>
             <span id="challengeCount" class="notification-badge" style="display:none">0</span>
@@ -1236,6 +1372,117 @@ header {
     </div>
 </div>
 
+<!-- ====== لوحة إدارة اللعب (للملك والملكة فقط) ====== -->
+<div class="modal" id="gameAdminModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="bi bi-sliders2"></i>
+                ⚙️ إدارة اللعب (الملك/الملكة)
+            </div>
+            <button class="modal-close" onclick="closeModal('gameAdminModal')">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        
+        <div class="admin-section">
+            <div class="admin-section-title">
+                <span class="ico">🖐️</span>
+                صورة اليد المفتوحة
+            </div>
+            <div class="admin-field">
+                <div class="admin-preview" id="prevOpen"></div>
+                <div class="admin-field-body">
+                    <div class="admin-field-label">رابط صورة اليد المفتوحة</div>
+                    <input type="text" class="admin-input" id="urlOpen" placeholder="https://..." oninput="updatePreview('prevOpen', this.value)">
+                    <div class="admin-actions">
+                        <button class="admin-btn-sm admin-btn-save" onclick="saveAdminImage('open')">
+                            <i class="bi bi-check-lg"></i> حفظ
+                        </button>
+                        <button class="admin-btn-sm admin-btn-del" onclick="resetAdminImage('open')">
+                            <i class="bi bi-trash"></i> حذف
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-hint">تظهر هذه الصورة عند اختيار اليد لإخفاء المحبس أو عند فتح اليد الفارغة.</div>
+        </div>
+        
+        <div class="admin-section">
+            <div class="admin-section-title">
+                <span class="ico">👊</span>
+                صورة اليد المسدودة
+            </div>
+            <div class="admin-field">
+                <div class="admin-preview" id="prevClosed"></div>
+                <div class="admin-field-body">
+                    <div class="admin-field-label">رابط صورة اليد المسدودة</div>
+                    <input type="text" class="admin-input" id="urlClosed" placeholder="https://..." oninput="updatePreview('prevClosed', this.value)">
+                    <div class="admin-actions">
+                        <button class="admin-btn-sm admin-btn-save" onclick="saveAdminImage('closed')">
+                            <i class="bi bi-check-lg"></i> حفظ
+                        </button>
+                        <button class="admin-btn-sm admin-btn-del" onclick="resetAdminImage('closed')">
+                            <i class="bi bi-trash"></i> حذف
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-hint">تظهر هذه الصورة للأيادي المغلقة أثناء اللعب.</div>
+        </div>
+        
+        <div class="admin-section">
+            <div class="admin-section-title">
+                <span class="ico">✊💍</span>
+                صورة يد المحبس
+            </div>
+            <div class="admin-field">
+                <div class="admin-preview" id="prevRing"></div>
+                <div class="admin-field-body">
+                    <div class="admin-field-label">رابط صورة اليد التي تحمل المحبس</div>
+                    <input type="text" class="admin-input" id="urlRing" placeholder="https://..." oninput="updatePreview('prevRing', this.value)">
+                    <div class="admin-actions">
+                        <button class="admin-btn-sm admin-btn-save" onclick="saveAdminImage('ring')">
+                            <i class="bi bi-check-lg"></i> حفظ
+                        </button>
+                        <button class="admin-btn-sm admin-btn-del" onclick="resetAdminImage('ring')">
+                            <i class="bi bi-trash"></i> حذف
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-hint">تظهر هذه الصورة للمخفي عند إخفاء المحبس في إحدى الأيدي.</div>
+        </div>
+        
+        <div class="admin-section">
+            <div class="admin-section-title">
+                <span class="ico">🖼️</span>
+                خلفية اللعب
+            </div>
+            <div class="admin-field">
+                <div class="admin-preview" id="prevBg"></div>
+                <div class="admin-field-body">
+                    <div class="admin-field-label">رابط صورة/جيف خلفية اللعب</div>
+                    <input type="text" class="admin-input" id="urlBg" placeholder="https://..." oninput="updatePreview('prevBg', this.value)">
+                    <div class="admin-actions">
+                        <button class="admin-btn-sm admin-btn-save" onclick="saveAdminImage('bg')">
+                            <i class="bi bi-check-lg"></i> حفظ
+                        </button>
+                        <button class="admin-btn-sm admin-btn-del" onclick="resetAdminImage('bg')">
+                            <i class="bi bi-trash"></i> حذف
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-hint">تظهر خلف الأيادي في منطقة اللعب. يمكن استخدام صورة ثابتة أو GIF.</div>
+        </div>
+        
+        <div class="admin-hint" style="margin-top:14px;padding:10px;background:rgba(255,215,0,.08);border-radius:10px;border:1px solid rgba(255,215,0,.25);">
+            💡 التعديلات تُحفظ في قاعدة البيانات وتظهر لجميع اللاعبين مباشرة بعد إعادة تحميل الصفحة.
+        </div>
+    </div>
+</div>
+
 <div class="modal" id="createChallengeModal">
     <div class="modal-content">
         <div class="modal-header">
@@ -1312,7 +1559,18 @@ const HIDE_TIME = 10;
 const SEARCH_TIME = 60;
 const MAX_ROUNDS = 10;
 
+/* ====== الصور الافتراضية ====== */
+const DEFAULT_IMAGES = {
+    closed: 'https://iili.io/nEEPMcF.png',
+    open:   'https://iili.io/nEEP6Nf.png',
+    ring:   'https://iili.io/nEEsXQR.png',
+    bg:     'https://iili.io/nEEsZve.gif'
+};
+
+let currentImages = { ...DEFAULT_IMAGES };
+
 let currentUser = null;
+let isRoyal = false;
 let selectedTargetUser = null;
 let currentGameId = null;
 let currentChallengeId = null;
@@ -1322,6 +1580,7 @@ let unsubscribeChallenges = null;
 let unsubscribeMyChallenge = null;
 let unsubscribeMessages = null;
 let unsubscribeRandomQueue = null;
+let unsubscribeImages = null;
 let membersUnsubscribe = null;
 let allMembers = [];
 let activeUsersMap = new Map();
@@ -1595,6 +1854,122 @@ window.forceCloseChallenges = function() {
 };
 
 window.openChallengesModal = function() { openModal('challengesModal'); };
+
+/* ====== لوحة إدارة اللعب ====== */
+window.openGameAdmin = function() {
+    if (!isRoyal) {
+        showToast('⚠️', 'هذه الميزة للملك والملكة فقط');
+        return;
+    }
+    $('urlOpen').value = currentImages.open === DEFAULT_IMAGES.open ? '' : currentImages.open;
+    $('urlClosed').value = currentImages.closed === DEFAULT_IMAGES.closed ? '' : currentImages.closed;
+    $('urlRing').value = currentImages.ring === DEFAULT_IMAGES.ring ? '' : currentImages.ring;
+    $('urlBg').value = currentImages.bg === DEFAULT_IMAGES.bg ? '' : currentImages.bg;
+    
+    updatePreview('prevOpen', $('urlOpen').value || DEFAULT_IMAGES.open);
+    updatePreview('prevClosed', $('urlClosed').value || DEFAULT_IMAGES.closed);
+    updatePreview('prevRing', $('urlRing').value || DEFAULT_IMAGES.ring);
+    updatePreview('prevBg', $('urlBg').value || DEFAULT_IMAGES.bg);
+    
+    openModal('gameAdminModal');
+};
+
+window.updatePreview = function(previewId, url) {
+    const el = $(previewId);
+    if (!el) return;
+    if (url && url.trim()) {
+        el.style.backgroundImage = `url('${url.trim()}')`;
+    } else {
+        el.style.backgroundImage = 'none';
+    }
+};
+
+window.saveAdminImage = async function(type) {
+    if (!isRoyal || !currentUser) return;
+    
+    const inputMap = { open: 'urlOpen', closed: 'urlClosed', ring: 'urlRing', bg: 'urlBg' };
+    const inputId = inputMap[type];
+    let val = ($(inputId)?.value || '').trim();
+    
+    if (!val) {
+        showToast('⚠️', 'الرجاء إدخال رابط الصورة');
+        return;
+    }
+    if (!/^https?:\/\//i.test(val)) {
+        showToast('⚠️', 'الرابط يجب أن يبدأ بـ http أو https');
+        return;
+    }
+    
+    try {
+        await setDoc(doc(db, 'm7basSettings', 'gameImages'), {
+            [type]: val,
+            updatedAt: serverTimestamp(),
+            updatedBy: currentUser.uid
+        }, { merge: true });
+        
+        currentImages[type] = val;
+        applyImages();
+        showToast('✅', 'تم حفظ الصورة بنجاح');
+    } catch(e) {
+        console.error(e);
+        showToast('❌', 'فشل الحفظ');
+    }
+};
+
+window.resetAdminImage = async function(type) {
+    if (!isRoyal || !currentUser) return;
+    if (!confirm('🗑️ هل تريد حذف هذه الصورة والعودة للافتراضي؟')) return;
+    
+    try {
+        await setDoc(doc(db, 'm7basSettings', 'gameImages'), {
+            [type]: DEFAULT_IMAGES[type],
+            updatedAt: serverTimestamp(),
+            updatedBy: currentUser.uid
+        }, { merge: true });
+        
+        currentImages[type] = DEFAULT_IMAGES[type];
+        
+        const inputMap = { open: 'urlOpen', closed: 'urlClosed', ring: 'urlRing', bg: 'urlBg' };
+        const previewMap = { open: 'prevOpen', closed: 'prevClosed', ring: 'prevRing', bg: 'prevBg' };
+        $(inputMap[type]).value = '';
+        updatePreview(previewMap[type], DEFAULT_IMAGES[type]);
+        
+        applyImages();
+        showToast('🗑️', 'تم الحذف والعودة للافتراضي');
+    } catch(e) {
+        console.error(e);
+        showToast('❌', 'فشل الحذف');
+    }
+};
+
+function applyImages() {
+    const root = document.documentElement;
+    root.style.setProperty('--img-hand-closed', `url('${currentImages.closed}')`);
+    root.style.setProperty('--img-hand-open', `url('${currentImages.open}')`);
+    root.style.setProperty('--img-hand-ring', `url('${currentImages.ring}')`);
+    root.style.setProperty('--img-game-bg', `url('${currentImages.bg}')`);
+    
+    const handsArea = $('handsArea');
+    if (handsArea) {
+        handsArea.style.backgroundImage = `url('${currentImages.bg}')`;
+    }
+}
+
+function listenForImages() {
+    if (unsubscribeImages) unsubscribeImages();
+    unsubscribeImages = onSnapshot(doc(db, 'm7basSettings', 'gameImages'), (snap) => {
+        if (snap.exists()) {
+            const data = snap.data();
+            currentImages.closed = data.closed || DEFAULT_IMAGES.closed;
+            currentImages.open   = data.open   || DEFAULT_IMAGES.open;
+            currentImages.ring   = data.ring   || DEFAULT_IMAGES.ring;
+            currentImages.bg     = data.bg     || DEFAULT_IMAGES.bg;
+        } else {
+            currentImages = { ...DEFAULT_IMAGES };
+        }
+        applyImages();
+    });
+}
 
 window.openChatModal = function() {
     if (!currentUser) return;
@@ -1953,6 +2328,15 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
         currentUser = user;
         $('authScreen').classList.remove('active');
+        
+        const email = (user.email || '').toLowerCase().trim();
+        isRoyal = (email === KING_EMAIL || email === QUEEN_EMAIL);
+        if (isRoyal) {
+            $('adminGameBtn').classList.add('show');
+        } else {
+            $('adminGameBtn').classList.remove('show');
+        }
+        
         try {
             const userDoc = await getDoc(doc(db, 'users', user.uid));
             if (userDoc.exists()) {
@@ -1964,13 +2348,17 @@ onAuthStateChanged(auth, async (user) => {
                 $('myName').textContent = user.displayName || user.email?.split('@')[0] || 'مستخدم';
             }
         } catch(e) {}
+        
+        listenForImages();
         await registerPresence();
         loadMembers();
         listenForActiveUsers();
         listenForIncomingChallenges();
     } else {
         currentUser = null;
+        isRoyal = false;
         $('authScreen').classList.add('active');
+        $('adminGameBtn').classList.remove('show');
     }
 });
 
@@ -2462,7 +2850,7 @@ function renderHands() {
     
     let html = '';
     for (let i = 0; i < 4; i++) {
-        let emoji = '👊';
+        let imgSrc = currentImages.closed;
         let label = `يد ${i + 1}`;
         let extraClass = '';
         let showRingBadge = false;
@@ -2471,52 +2859,52 @@ function renderHands() {
         if (isHiding) {
             if (iAmHider) {
                 if (gameState.selectedHand === i) {
-                    emoji = '🖐️';
+                    imgSrc = currentImages.ring;
                     extraClass = 'selected';
                     label = 'مخفي هنا 💍';
                 } else if (gameState.selectedHand === -1) {
-                    emoji = '🖐️';
+                    imgSrc = currentImages.open;
                     label = 'اضغط لإخفاء المحبس';
                 } else {
-                    emoji = '👊';
+                    imgSrc = currentImages.closed;
                     label = `يد ${i + 1}`;
                     extraClass = 'disabled';
                 }
             } else {
-                emoji = '👊';
+                imgSrc = currentImages.closed;
                 label = `يد ${i + 1}`;
                 extraClass = 'disabled';
             }
         } else if (isSearching) {
             if (!iAmHider) {
                 if (isRevealed) {
-                    emoji = '🖐️';
+                    imgSrc = currentImages.open;
                     label = '✅ فارغة';
                     extraClass = 'revealed';
                 } else if (gameState.selectedHand === -1) {
-                    emoji = '👊';
+                    imgSrc = currentImages.closed;
                     label = 'اضغط للتفتيش';
                 } else if (gameState.selectedHand === i) {
-                    emoji = '👊';
+                    imgSrc = currentImages.closed;
                     extraClass = 'selected';
                     label = 'اخترت هذه';
                 } else {
-                    emoji = '👊';
+                    imgSrc = currentImages.closed;
                     extraClass = 'disabled';
                     label = `يد ${i + 1}`;
                 }
             } else {
                 if (gameState.selectedHand === i) {
-                    emoji = '✊💍';
+                    imgSrc = currentImages.ring;
                     extraClass = 'selected';
                     label = 'هنا 💍';
                     showRingBadge = true;
                 } else if (isRevealed) {
-                    emoji = '🖐️';
+                    imgSrc = currentImages.open;
                     label = '✅ فُتحت';
                     extraClass = 'revealed';
                 } else {
-                    emoji = '👊';
+                    imgSrc = currentImages.closed;
                     label = `يد ${i + 1}`;
                     extraClass = 'disabled';
                 }
@@ -2526,13 +2914,13 @@ function renderHands() {
             const wasGuessed = game.searcherGuess === i;
             
             if (hasRing) {
-                emoji = '🖐️💍';
+                imgSrc = currentImages.ring;
                 label = '💍 المحبس هنا!';
                 if (wasGuessed && (game.searcherAction === 'take' || game.searcherAction === 'knock')) {
                     extraClass = 'correct';
                 }
             } else {
-                emoji = '🖐️';
+                imgSrc = currentImages.open;
                 label = 'فارغة';
                 if (wasGuessed && (game.searcherAction === 'knock' || game.searcherAction === 'take')) {
                     extraClass = 'wrong';
@@ -2548,7 +2936,7 @@ function renderHands() {
             <div class="hand-box ${extraClass}" ${canClick ? `onclick="onHandClick(${i})"` : ''}>
                 <span class="hand-number-badge">${i + 1}</span>
                 ${showRingBadge ? '<span class="hand-ring-badge">💍</span>' : ''}
-                <div class="hand-emoji">${emoji}</div>
+                <img class="hand-img" src="${imgSrc}" alt="يد ${i + 1}" draggable="false" onerror="this.style.display='none'">
                 <div class="hand-label">${label}</div>
             </div>
         `;
@@ -3082,6 +3470,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') sendChatMessage();
         });
     }
+    
+    applyImages();
 });
 
 document.querySelectorAll('.modal, .action-dialog').forEach(m => m.addEventListener('click', e => { 
@@ -3106,6 +3496,7 @@ document.addEventListener('selectstart', (e) => {
 window.addEventListener('beforeunload', () => {
     cleanupGame();
     if (unsubscribeRandomQueue) unsubscribeRandomQueue();
+    if (unsubscribeImages) unsubscribeImages();
     if (heartbeatInterval) clearInterval(heartbeatInterval);
     if (myRandomQueueId) {
         deleteDoc(doc(db, 'm7basRandomQueue', myRandomQueueId)).catch(() => {});
